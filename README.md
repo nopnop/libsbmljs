@@ -3,7 +3,7 @@ libsbml
 
 Bindings to use libsbml from node
 
-# Installation
+# Generating Bindings
 
 1. `libsbml` must be installed
 2. Edit the `libsbml_include` variable to point to your `libsbml` header folder
