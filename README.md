@@ -1,7 +1,6 @@
-libsbml
-=======
+# `libsbml`
 
-Bindings to use libsbml from node
+Bindings to use `libsbml` from node.js
 
 # Generating Bindings
 
