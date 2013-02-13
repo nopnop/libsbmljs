@@ -1,10 +1,10 @@
 {
-  "name": "libsbml",
+  "name": "libsbmljs",
   "version": "0.0.1",
   "author": "Stanley Gu",
   "repository" : {
     "type": "git",
-    "url":  "https://github.com/stanley-gu/libsbml.git"
+    "url":  "https://github.com/stanley-gu/libsbmljs.git"
   },
   "scripts": {
     "start": ""
