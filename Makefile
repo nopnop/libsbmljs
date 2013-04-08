@@ -1,6 +1,11 @@
 libsbml_include=/usr/local/include/sbml
 all:
-	node_modules/libclang/bin/ffi-generate-node.js -f headers.h -l libsbml -p Model -p SBML -p Reaction -p Parameter -p Species > libsbml.js
+	node_modules/libclang/bin/ffi-generate-node.js -f headers.h -l libsbml -p Model -p SBML -p Reaction -p Parameter -p Species -p List > libsbml_out.js
+	sed -e '/SBMLDocument_setLocationURI/d' \
+	-e '/SBMLDocument_setConsistencyChecks/d' \
+	-e '/SBMLDocument_validateSBML/d' \
+	./libsbml_out.js > libsbml.js
+	rm libsbml_out.js
 
 sbml:
 	node_modules/libclang/bin/ffi-generate-node.js -f headers.h -l libsbml -p SBML > libsbml_sbml.js

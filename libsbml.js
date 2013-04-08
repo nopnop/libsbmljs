@@ -15,6 +15,12 @@ exports.CONSTANTS = {
         BQM_UNKNOWN: 3
     }
 };
+var List_t = exports.List_t = voidPtr;
+var List_tPtr = exports.List_tPtr = ref.refType(List_t);
+var ListNode_t = exports.ListNode_t = voidPtr;
+var ListNode_tPtr = exports.ListNode_tPtr = ref.refType(ListNode_t);
+var ListItemPredicate = exports.ListItemPredicate = FFI.Function(ref.types.int32, [voidPtr]);
+var ListItemComparator = exports.ListItemComparator = FFI.Function(ref.types.int32, [voidPtr, voidPtr]);
 var ModelCreator_t = exports.ModelCreator_t = voidPtr;
 var ModelCreator_tPtr = exports.ModelCreator_tPtr = ref.refType(ModelCreator_t);
 var XMLNode_t = exports.XMLNode_t = voidPtr;
@@ -23,18 +29,24 @@ var ModelHistory_t = exports.ModelHistory_t = voidPtr;
 var ModelHistory_tPtr = exports.ModelHistory_tPtr = ref.refType(ModelHistory_t);
 var Date_t = exports.Date_t = voidPtr;
 var Date_tPtr = exports.Date_tPtr = ref.refType(Date_t);
-var List_t = exports.List_t = voidPtr;
-var List_tPtr = exports.List_tPtr = ref.refType(List_t);
 var SBMLNamespaces_t = exports.SBMLNamespaces_t = voidPtr;
 var SBMLNamespaces_tPtr = exports.SBMLNamespaces_tPtr = ref.refType(SBMLNamespaces_t);
 var XMLNamespaces_t = exports.XMLNamespaces_t = voidPtr;
 var XMLNamespaces_tPtr = exports.XMLNamespaces_tPtr = ref.refType(XMLNamespaces_t);
+var ListOf_t = exports.ListOf_t = voidPtr;
+var ListOf_tPtr = exports.ListOf_tPtr = ref.refType(ListOf_t);
+var SBase_t = exports.SBase_t = voidPtr;
+var SBase_tPtr = exports.SBase_tPtr = ref.refType(SBase_t);
 var Parameter_t = exports.Parameter_t = voidPtr;
 var Parameter_tPtr = exports.Parameter_tPtr = ref.refType(Parameter_t);
 var UnitDefinition_t = exports.UnitDefinition_t = voidPtr;
 var UnitDefinition_tPtr = exports.UnitDefinition_tPtr = ref.refType(UnitDefinition_t);
 var ASTNode_t = exports.ASTNode_t = voidPtr;
 var ASTNode_tPtr = exports.ASTNode_tPtr = ref.refType(ASTNode_t);
+var FunctionDefinition_t = exports.FunctionDefinition_t = voidPtr;
+var FunctionDefinition_tPtr = exports.FunctionDefinition_tPtr = ref.refType(FunctionDefinition_t);
+var InitialAssignment_t = exports.InitialAssignment_t = voidPtr;
+var InitialAssignment_tPtr = exports.InitialAssignment_tPtr = ref.refType(InitialAssignment_t);
 var SpeciesReference_t = exports.SpeciesReference_t = voidPtr;
 var SpeciesReference_tPtr = exports.SpeciesReference_tPtr = ref.refType(SpeciesReference_t);
 var StoichiometryMath_t = exports.StoichiometryMath_t = voidPtr;
@@ -83,8 +95,6 @@ var FILE = exports.FILE = Struct({
     _IO_FILE: _IO_FILE,
 });
 var FILEPtr = exports.FILEPtr = ref.refType(FILE);
-var FunctionDefinition_t = exports.FunctionDefinition_t = voidPtr;
-var FunctionDefinition_tPtr = exports.FunctionDefinition_tPtr = ref.refType(FunctionDefinition_t);
 var CompartmentType_t = exports.CompartmentType_t = voidPtr;
 var CompartmentType_tPtr = exports.CompartmentType_tPtr = ref.refType(CompartmentType_t);
 var SpeciesType_t = exports.SpeciesType_t = voidPtr;
@@ -93,8 +103,6 @@ var Compartment_t = exports.Compartment_t = voidPtr;
 var Compartment_tPtr = exports.Compartment_tPtr = ref.refType(Compartment_t);
 var Species_t = exports.Species_t = voidPtr;
 var Species_tPtr = exports.Species_tPtr = ref.refType(Species_t);
-var InitialAssignment_t = exports.InitialAssignment_t = voidPtr;
-var InitialAssignment_tPtr = exports.InitialAssignment_tPtr = ref.refType(InitialAssignment_t);
 var Rule_t = exports.Rule_t = voidPtr;
 var Rule_tPtr = exports.Rule_tPtr = ref.refType(Rule_t);
 var Constraint_t = exports.Constraint_t = voidPtr;
@@ -115,8 +123,6 @@ var Trigger_t = exports.Trigger_t = voidPtr;
 var Trigger_tPtr = exports.Trigger_tPtr = ref.refType(Trigger_t);
 var Delay_t = exports.Delay_t = voidPtr;
 var Delay_tPtr = exports.Delay_tPtr = ref.refType(Delay_t);
-var ListOf_t = exports.ListOf_t = voidPtr;
-var ListOf_tPtr = exports.ListOf_tPtr = ref.refType(ListOf_t);
 var SBMLReader_t = exports.SBMLReader_t = voidPtr;
 var SBMLReader_tPtr = exports.SBMLReader_tPtr = ref.refType(SBMLReader_t);
 var SBMLWriter_t = exports.SBMLWriter_t = voidPtr;
@@ -125,6 +131,18 @@ var L3ParserSettings_t = exports.L3ParserSettings_t = voidPtr;
 var L3ParserSettings_tPtr = exports.L3ParserSettings_tPtr = ref.refType(L3ParserSettings_t);
 exports.libsbml = new FFI.Library('libsbml', {
     SBMLTypeCode_toString: [ref.types.CString, [ref.types.int32, ref.types.CString]],
+    List_create: [List_t, []],
+    ListNode_create: [ListNode_t, [voidPtr]],
+    List_free: [ref.types.void, [List_tPtr]],
+    ListNode_free: [ref.types.void, [ListNode_tPtr]],
+    List_add: [ref.types.void, [List_tPtr, voidPtr]],
+    List_countIf: [ref.types.uint32, [List_tPtr, ListItemPredicate]],
+    List_find: [voidPtr, [List_tPtr, voidPtr, ListItemComparator]],
+    List_findIf: [List_tPtr, [List_tPtr, ListItemPredicate]],
+    List_get: [voidPtr, [List_tPtr, ref.types.uint32]],
+    List_prepend: [ref.types.void, [List_tPtr, voidPtr]],
+    List_remove: [voidPtr, [List_tPtr, ref.types.uint32]],
+    List_size: [ref.types.uint32, [List_tPtr]],
     ModelCreator_create: [ModelCreator_t, []],
     ModelCreator_createFromNode: [ModelCreator_tPtr, [XMLNode_t]],
     ModelCreator_free: [ref.types.void, [ModelCreator_tPtr]],
@@ -156,7 +174,7 @@ exports.libsbml = new FFI.Library('libsbml', {
     ModelHistory_addCreator: [ref.types.int32, [ModelHistory_tPtr, ModelCreator_tPtr]],
     ModelHistory_setCreatedDate: [ref.types.int32, [ModelHistory_tPtr, Date_t]],
     ModelHistory_setModifiedDate: [ref.types.int32, [ModelHistory_tPtr, Date_tPtr]],
-    ModelHistory_getListCreators: [List_t, [ModelHistory_tPtr]],
+    ModelHistory_getListCreators: [List_tPtr, [ModelHistory_tPtr]],
     ModelHistory_getCreatedDate: [Date_tPtr, [ModelHistory_tPtr]],
     ModelHistory_getModifiedDate: [Date_tPtr, [ModelHistory_tPtr]],
     ModelHistory_getNumCreators: [ref.types.uint32, [ModelHistory_tPtr]],
@@ -177,6 +195,19 @@ exports.libsbml = new FFI.Library('libsbml', {
     SBMLNamespaces_getSBMLNamespaceURI: [ref.types.CString, [ref.types.uint32, ref.types.uint32]],
     SBMLNamespaces_addNamespaces: [ref.types.int32, [SBMLNamespaces_tPtr, XMLNamespaces_tPtr]],
     SBMLNamespaces_getSupportedNamespaces: [voidPtr, [voidPtr]],
+    ListOf_create: [ListOf_t, [ref.types.uint32, ref.types.uint32]],
+    ListOf_free: [ref.types.void, [ListOf_tPtr]],
+    ListOf_clone: [ListOf_tPtr, [ListOf_tPtr]],
+    ListOf_append: [ref.types.int32, [ListOf_tPtr, SBase_t]],
+    ListOf_appendAndOwn: [ref.types.int32, [ListOf_tPtr, SBase_tPtr]],
+    ListOf_appendFrom: [ref.types.int32, [ListOf_tPtr, ListOf_tPtr]],
+    ListOf_insert: [ref.types.int32, [ListOf_tPtr, ref.types.int32, SBase_tPtr]],
+    ListOf_insertAndOwn: [ref.types.int32, [ListOf_tPtr, ref.types.int32, SBase_tPtr]],
+    ListOf_get: [SBase_tPtr, [ListOf_tPtr, ref.types.uint32]],
+    ListOf_clear: [ref.types.void, [ListOf_tPtr, ref.types.int32]],
+    ListOf_remove: [SBase_tPtr, [ListOf_tPtr, ref.types.uint32]],
+    ListOf_size: [ref.types.uint32, [ListOf_tPtr]],
+    ListOf_getItemTypeCode: [ref.types.int32, [ListOf_tPtr]],
     Parameter_create: [Parameter_t, [ref.types.uint32, ref.types.uint32]],
     Parameter_createWithNS: [Parameter_tPtr, [SBMLNamespaces_tPtr]],
     Parameter_free: [ref.types.void, [Parameter_tPtr]],
@@ -203,8 +234,14 @@ exports.libsbml = new FFI.Library('libsbml', {
     Parameter_unsetUnits: [ref.types.int32, [Parameter_tPtr]],
     Parameter_getDerivedUnitDefinition: [UnitDefinition_t, [Parameter_tPtr]],
     Parameter_hasRequiredAttributes: [ref.types.int32, [Parameter_tPtr]],
+    ListOfParameters_getById: [Parameter_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfParameters_removeById: [Parameter_tPtr, [ListOf_tPtr, ref.types.CString]],
     SBML_formulaToString: [ref.types.CString, [ASTNode_t]],
     SBML_parseFormula: [ASTNode_tPtr, [ref.types.CString]],
+    ListOfFunctionDefinitions_getById: [FunctionDefinition_t, [ListOf_tPtr, ref.types.CString]],
+    ListOfFunctionDefinitions_removeById: [FunctionDefinition_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfInitialAssignments_getById: [InitialAssignment_t, [ListOf_tPtr, ref.types.CString]],
+    ListOfInitialAssignments_removeById: [InitialAssignment_tPtr, [ListOf_tPtr, ref.types.CString]],
     SpeciesReference_create: [SpeciesReference_t, [ref.types.uint32, ref.types.uint32]],
     SpeciesReference_createWithNS: [SpeciesReference_tPtr, [SBMLNamespaces_tPtr]],
     SpeciesReference_createModifier: [SpeciesReference_tPtr, [ref.types.uint32, ref.types.uint32]],
@@ -240,6 +277,8 @@ exports.libsbml = new FFI.Library('libsbml', {
     SpeciesReference_unsetStoichiometry: [ref.types.int32, [SpeciesReference_tPtr]],
     SpeciesReference_hasRequiredAttributes: [ref.types.int32, [SpeciesReference_tPtr]],
     SpeciesReference_createStoichiometryMath: [StoichiometryMath_tPtr, [SpeciesReference_tPtr]],
+    ListOfSpeciesReferences_getById: [SpeciesReference_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfSpeciesReferences_removeById: [SpeciesReference_tPtr, [ListOf_tPtr, ref.types.CString]],
     SBMLDocument_create: [SBMLDocument_t, []],
     SBMLDocument_createWithLevelAndVersion: [SBMLDocument_tPtr, [ref.types.uint32, ref.types.uint32]],
     SBMLDocument_createWithSBMLNamespaces: [SBMLDocument_tPtr, [SBMLNamespaces_tPtr]],
@@ -255,6 +294,7 @@ exports.libsbml = new FFI.Library('libsbml', {
     SBMLDocument_setLevelAndVersionNonStrict: [ref.types.int32, [SBMLDocument_tPtr, ref.types.uint32, ref.types.uint32]],
     SBMLDocument_setModel: [ref.types.int32, [SBMLDocument_tPtr, Model_tPtr]],
     SBMLDocument_createModel: [Model_tPtr, [SBMLDocument_tPtr]],
+    SBMLDocument_getLocationURI: [ref.types.CString, [SBMLDocument_tPtr]],
     SBMLDocument_checkConsistency: [ref.types.uint32, [SBMLDocument_tPtr]],
     SBMLDocument_checkInternalConsistency: [ref.types.uint32, [SBMLDocument_tPtr]],
     SBMLDocument_checkL1Compatibility: [ref.types.uint32, [SBMLDocument_tPtr]],
@@ -320,14 +360,14 @@ exports.libsbml = new FFI.Library('libsbml', {
     Model_isSetModelHistory: [ref.types.int32, [Model_tPtr]],
     Model_setModelHistory: [ref.types.int32, [Model_tPtr, ModelHistory_tPtr]],
     Model_unsetModelHistory: [ref.types.int32, [Model_tPtr]],
-    Model_addFunctionDefinition: [ref.types.int32, [Model_tPtr, FunctionDefinition_t]],
+    Model_addFunctionDefinition: [ref.types.int32, [Model_tPtr, FunctionDefinition_tPtr]],
     Model_addUnitDefinition: [ref.types.int32, [Model_tPtr, UnitDefinition_tPtr]],
     Model_addCompartmentType: [ref.types.int32, [Model_tPtr, CompartmentType_t]],
     Model_addSpeciesType: [ref.types.int32, [Model_tPtr, SpeciesType_t]],
     Model_addCompartment: [ref.types.int32, [Model_tPtr, Compartment_t]],
     Model_addSpecies: [ref.types.int32, [Model_tPtr, Species_t]],
     Model_addParameter: [ref.types.int32, [Model_tPtr, Parameter_tPtr]],
-    Model_addInitialAssignment: [ref.types.int32, [Model_tPtr, InitialAssignment_t]],
+    Model_addInitialAssignment: [ref.types.int32, [Model_tPtr, InitialAssignment_tPtr]],
     Model_addRule: [ref.types.int32, [Model_tPtr, Rule_t]],
     Model_addConstraint: [ref.types.int32, [Model_tPtr, Constraint_t]],
     Model_addReaction: [ref.types.int32, [Model_tPtr, Reaction_t]],
@@ -356,7 +396,7 @@ exports.libsbml = new FFI.Library('libsbml', {
     Model_createEventAssignment: [EventAssignment_t, [Model_tPtr]],
     Model_createTrigger: [Trigger_t, [Model_tPtr]],
     Model_createDelay: [Delay_t, [Model_tPtr]],
-    Model_getListOfFunctionDefinitions: [ListOf_t, [Model_tPtr]],
+    Model_getListOfFunctionDefinitions: [ListOf_tPtr, [Model_tPtr]],
     Model_getListOfUnitDefinitions: [ListOf_tPtr, [Model_tPtr]],
     Model_getListOfCompartmentTypes: [ListOf_tPtr, [Model_tPtr]],
     Model_getListOfSpeciesTypes: [ListOf_tPtr, [Model_tPtr]],
@@ -431,6 +471,10 @@ exports.libsbml = new FFI.Library('libsbml', {
     Model_removeReactionById: [Reaction_tPtr, [Model_tPtr, ref.types.CString]],
     Model_removeEvent: [Event_tPtr, [Model_tPtr, ref.types.uint32]],
     Model_removeEventById: [Event_tPtr, [Model_tPtr, ref.types.CString]],
+    ListOfUnitDefinitions_getById: [UnitDefinition_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfUnitDefinitions_removeById: [UnitDefinition_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfCompartmentTypes_getById: [CompartmentType_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfCompartmentTypes_removeById: [CompartmentType_tPtr, [ListOf_tPtr, ref.types.CString]],
     SpeciesType_create: [SpeciesType_tPtr, [ref.types.uint32, ref.types.uint32]],
     SpeciesType_createWithNS: [SpeciesType_tPtr, [SBMLNamespaces_tPtr]],
     SpeciesType_free: [ref.types.void, [SpeciesType_tPtr]],
@@ -443,6 +487,10 @@ exports.libsbml = new FFI.Library('libsbml', {
     SpeciesType_setId: [ref.types.int32, [SpeciesType_tPtr, ref.types.CString]],
     SpeciesType_setName: [ref.types.int32, [SpeciesType_tPtr, ref.types.CString]],
     SpeciesType_unsetName: [ref.types.int32, [SpeciesType_tPtr]],
+    ListOfSpeciesTypes_getById: [SpeciesType_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfSpeciesTypes_removeById: [SpeciesType_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfCompartments_getById: [Compartment_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfCompartments_removeById: [Compartment_tPtr, [ListOf_tPtr, ref.types.CString]],
     Species_create: [Species_tPtr, [ref.types.uint32, ref.types.uint32]],
     Species_createWithNS: [Species_tPtr, [SBMLNamespaces_tPtr]],
     Species_free: [ref.types.void, [Species_tPtr]],
@@ -502,6 +550,10 @@ exports.libsbml = new FFI.Library('libsbml', {
     Species_unsetConversionFactor: [ref.types.int32, [Species_tPtr]],
     Species_getDerivedUnitDefinition: [UnitDefinition_tPtr, [Species_tPtr]],
     Species_hasRequiredAttributes: [ref.types.int32, [Species_tPtr]],
+    ListOfSpecies_getById: [Species_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfSpecies_removeById: [Species_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfLocalParameters_getById: [LocalParameter_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfLocalParameters_removeById: [LocalParameter_tPtr, [ListOf_tPtr, ref.types.CString]],
     Reaction_create: [Reaction_tPtr, [ref.types.uint32, ref.types.uint32]],
     Reaction_createWithNS: [Reaction_tPtr, [SBMLNamespaces_tPtr]],
     Reaction_free: [ref.types.void, [Reaction_tPtr]],
@@ -556,6 +608,14 @@ exports.libsbml = new FFI.Library('libsbml', {
     Reaction_removeProductBySpecies: [SpeciesReference_tPtr, [Reaction_tPtr, ref.types.CString]],
     Reaction_removeModifier: [SpeciesReference_tPtr, [Reaction_tPtr, ref.types.uint32]],
     Reaction_removeModifierBySpecies: [SpeciesReference_tPtr, [Reaction_tPtr, ref.types.CString]],
+    ListOfReactions_getById: [Reaction_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfReactions_removeById: [Reaction_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfRules_getById: [Rule_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfRules_removeById: [Rule_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfEvents_getById: [Event_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfEvents_removeById: [Event_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfEventAssignments_getById: [EventAssignment_tPtr, [ListOf_tPtr, ref.types.CString]],
+    ListOfEventAssignments_removeById: [EventAssignment_tPtr, [ListOf_tPtr, ref.types.CString]],
     SBMLReader_create: [SBMLReader_t, []],
     SBMLReader_free: [ref.types.void, [SBMLReader_tPtr]],
     SBMLReader_readSBML: [SBMLDocument_tPtr, [SBMLReader_tPtr, ref.types.CString]],
