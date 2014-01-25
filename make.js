@@ -22,6 +22,11 @@ var result = generate({
 var result = result.serialized
   .replace(/(SBMLDocument_setLocationURI)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
   .replace(/(SBMLDocument_setConsistencyChecks)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
+  .replace(/(SBMLDocument_setConsistencyChecksForConversion)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
+  .replace(/(SBMLDocument_getNumErrors)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
+  .replace(/(SBMLDocument_getNumErrorsWithSeverity)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
+  .replace(/(SBMLDocument_convert)[^\]]+\]\]\,/m, '// REMOVED: $1\n')
   .replace(/(SBMLDocument_validateSBML)[^\]]+\]\]\,/m, '// REMOVED: $1\n');
 
 fs.writeFileSync(join(__dirname, 'libsbml.js'), result);
+

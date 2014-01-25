@@ -667,11 +667,8 @@ exports.libsbml = new FFI.Library('libsbml', {
   ]],
   // REMOVED: SBMLDocument_setConsistencyChecks
 
-  SBMLDocument_setConsistencyChecksForConversion: [ref.types.void, [
-    SBMLDocument_tPtr,
-    ref.types.int32,
-    ref.types.int32,
-  ]],
+  // REMOVED: SBMLDocument_setConsistencyChecksForConversion
+
   SBMLDocument_checkConsistency: [ref.types.uint32, [
     SBMLDocument_tPtr,
   ]],
@@ -699,13 +696,10 @@ exports.libsbml = new FFI.Library('libsbml', {
     SBMLDocument_tPtr,
     ref.types.uint32,
   ]],
-  SBMLDocument_getNumErrors: [ref.types.uint32, [
-    SBMLDocument_tPtr,
-  ]],
-  SBMLDocument_getNumErrorsWithSeverity: [ref.types.uint32, [
-    SBMLDocument_tPtr,
-    ref.types.uint32,
-  ]],
+  // REMOVED: SBMLDocument_getNumErrors
+
+  // REMOVED: SBMLDocument_getNumErrorsWithSeverity
+
   SBMLDocument_printErrors: [ref.types.void, [
     SBMLDocument_tPtr,
     FILE,
@@ -747,10 +741,8 @@ exports.libsbml = new FFI.Library('libsbml', {
     SBMLDocument_tPtr,
     ref.types.CString,
   ]],
-  SBMLDocument_convert: [ref.types.int32, [
-    SBMLDocument_tPtr,
-    ConversionProperties_t,
-  ]],
+  // REMOVED: SBMLDocument_convert
+
   Model_create: [Model_tPtr, [
     ref.types.uint32,
     ref.types.uint32,
