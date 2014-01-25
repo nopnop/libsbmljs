@@ -2,17 +2,17 @@
 
 Bindings to use `libsbml` from node.js
 
-# Generating Bindings
+## Original project: https://github.com/stanley-gu/libsbmljs
 
-1. `libsbml` must be installed
-2. Edit the `libsbml_include` variable to point to your `libsbml` header folder
-3. Run `make` to generate the bindings
-4. In `libsbml_model.js` you must comment out the following methods:
-  * SBMLDocument_setLocationURI
-  * SBMLDocument_setConsistencyChecks
-  * SBMLDocument_setConsistencyChecksForConversion
-  * SBMLDocument_validateSBML
-  * SBMLDocument_getNumErrors
-  * SBMLDocument_getNumErrorsWithSeverity
-  * SBMLDocument_convert
+Main diff from original fork:
 
+- Use [ffi-generate](https://github.com/tjfontaine/node-ffi-generate)
+- Use npm post-install script to create the binding
+- Upgrade the this readme with requirements for OSX
+
+
+## Requirements (Notes for OSX)
+
+- Install `libsbml`: See [installation guide](http://sbml.org/Software/libSBML/docs/cpp-api/libsbml-installation.html)
+- Up to date XCode with developer tools (`xcode-select --install`)
+- A valid `LD_LIBRARY_PATH` (`/Library/Developer/CommandLineTools/usr/lib` on recent OSX)
